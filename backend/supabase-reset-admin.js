@@ -6,8 +6,8 @@ dotenv.config();
 
 const resetAdmin = async () => {
     try {
-        const email = 'admin@techagent.tech';
-        const password = 'adminpassword123';
+        const email = 'admin@gmail.com';
+        const password = 'admin@123';
 
         console.log('Attempting to reset admin in Supabase...');
 

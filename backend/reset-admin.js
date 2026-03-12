@@ -10,20 +10,20 @@ const resetAdmin = async () => {
         console.log('Connected to MongoDB');
 
         // Remove any existing user with this email to be sure
-        await User.deleteMany({ email: 'admin@techagent.tech' });
+        await User.deleteMany({ email: 'admin@gmail.com' });
         console.log('Existing admin users with this email cleared');
 
         const admin = new User({
             name: 'Super Admin',
-            email: 'admin@techagent.tech',
-            password: 'adminpassword123',
+            email: 'admin@gmail.com',
+            password: 'admin@123',
             role: 'admin'
         });
 
         await admin.save();
         console.log('Default admin user created successfully');
-        console.log('Email: admin@techagent.tech');
-        console.log('Password: adminpassword123');
+        console.log('Email: admin@gmail.com');
+        console.log('Password: admin@123');
         process.exit();
     } catch (error) {
         console.error('Error resetting admin:', error);

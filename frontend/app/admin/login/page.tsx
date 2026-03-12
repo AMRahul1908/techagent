@@ -64,7 +64,7 @@ const AdminLoginPage = () => {
                                 required
                                 type="email"
                                 className="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white focus:outline-none focus:border-teal-500/50 transition-all"
-                                placeholder="admin@techagent.tech"
+                                placeholder="admin@gmail.com"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />

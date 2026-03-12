@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:3000', 'https://tech-agent.netlify.app'],
     credentials: true
 }));
 app.use(express.json());
@@ -22,6 +22,11 @@ app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/contact', contactRoutes);
 
+// Serverless alias for Netlify
+app.use('/.netlify/functions/api/auth', authRoutes);
+app.use('/.netlify/functions/api/products', productRoutes);
+app.use('/.netlify/functions/api/contact', contactRoutes);
+
 // Database Connection - Supabase is used via controllers
 console.log('Backend initialized with Supabase integration.');
 
@@ -29,6 +34,10 @@ app.get('/', (req, res) => {
     res.send('Tech Agent API is running');
 });
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+}
+
+module.exports = app;
