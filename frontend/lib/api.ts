@@ -9,12 +9,11 @@ const api = axios.create({
     },
 });
 
-// Add interceptor to include JWT token if available
-api.interceptors.request.use((config) => {
-    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-    }
+// Add interceptor to include Clerk token if available
+api.interceptors.request.use(async (config) => {
+    // With Clerk, token management is usually handled server-side or via their hooks, 
+    // but if needed here, you can inject it explicitly in your components.
+    // For now, we leave the interceptor pass-through to not break existing structure.
     return config;
 });
 
@@ -28,10 +27,7 @@ export const productsApi = {
     delete: (id: string) => api.delete(`/products/${id}`),
 };
 
-export const authApi = {
-    login: (data: any) => api.post('/auth/login', data),
-    register: (data: any) => api.post('/auth/register', data),
-};
+
 
 export const contactApi = {
     submit: (data: any) => api.post('/contact', data),

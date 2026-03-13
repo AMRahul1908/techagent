@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const authRoutes = require('./routes/authRoutes');
+
 const productRoutes = require('./routes/productRoutes');
 const contactRoutes = require('./routes/contactRoutes');
 
@@ -18,12 +18,10 @@ app.use(cors({
 app.use(express.json());
 
 // Routes
-app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/contact', contactRoutes);
 
 // Serverless alias for Netlify
-app.use('/.netlify/functions/api/auth', authRoutes);
 app.use('/.netlify/functions/api/products', productRoutes);
 app.use('/.netlify/functions/api/contact', contactRoutes);
 

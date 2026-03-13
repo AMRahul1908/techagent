@@ -1,48 +1,27 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import React from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import {
     LayoutDashboard,
     PlusCircle,
     Settings,
-    LogOut,
     Box,
-    Menu,
-    X
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { UserButton } from "@clerk/nextjs";
 
 export default function AdminLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
-    const router = useRouter();
     const pathname = usePathname();
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-        if (!token && pathname !== "/admin/login") {
-            router.push("/admin/login");
-        } else {
-            setIsAuthenticated(true);
-        }
-    }, [pathname, router]);
-
-    const handleLogout = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        router.push("/admin/login");
-    };
 
     if (pathname === "/admin/login") {
         return <div className="bg-[#0f172a] min-h-screen">{children}</div>;
     }
-
-    if (isAuthenticated === null) return null;
 
     const menuItems = [
         { name: "Dashboard", href: "/admin/dashboard", icon: <LayoutDashboard size={20} /> },
@@ -57,7 +36,7 @@ export default function AdminLayout({
             <aside className="fixed inset-y-0 left-0 bg-[#0f172a] border-r border-white/5 w-64 z-50">
                 <div className="h-full flex flex-col p-4">
                     <div className="flex items-center justify-between mb-10 px-2">
-                        <Link href="/" className="flex items-center gap-3">
+                        <Link href="/admin/dashboard" className="flex items-center gap-3">
                             <div className="w-10 h-10 overflow-hidden flex items-center justify-center shrink-0">
                                 <img src="/images/logo2.jpeg" alt="Tech Agent Icon" className="w-full h-full object-contain" />
                             </div>
@@ -83,13 +62,10 @@ export default function AdminLayout({
                         ))}
                     </nav>
 
-                    <button
-                        onClick={handleLogout}
-                        className="flex items-center gap-4 px-4 py-3 rounded-xl text-slate-400 hover:bg-red-500/10 hover:text-red-400 transition-all mt-auto"
-                    >
-                        <LogOut size={20} />
-                        <span className="font-medium">Logout</span>
-                    </button>
+                    <div className="mt-auto px-4 py-3 flex items-center justify-between">
+                        <span className="text-slate-400 font-medium">Account</span>
+                        <UserButton />
+                    </div>
                 </div>
             </aside>
 
